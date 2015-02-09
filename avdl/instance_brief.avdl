@@ -1,0 +1,56 @@
+/**
+ * Basic instance record IDL
+ */
+
+@namespace("org.openstack.messages")
+protocol Instances {
+
+  record InstanceBrief {
+    // fixed(4)?
+    union { null, string } access_ip_v4 = null;
+    // fixed(16)?
+    union { null, string } access_ip_v6 = null;
+    union { null, string } architecture = null;
+    union { null, string } availability_zone = null;
+    string display_name;
+    int ephemeral_gb;
+    union { null, string } host = null;
+    union { null, string } hostname;
+    int instance_type_id;
+    string kernel_id;
+    int memory_mb;
+    map<string> metadata = {};
+    union { null, string } node = null;
+    string os_type;
+    string ramdisk_id;
+    union { null, string } reservation_id;
+    int root_gb;
+    int vcpus;
+
+    // UUID
+    union { null, string } user_id;
+
+    int disk_gb;
+    map<string> image_meta = {};
+    string image_name;
+    string image_ref_url;
+    string instance_flavor_id;
+    // UUID
+    union { null, string } instance_id;
+    string instance_type;
+    string message;
+    // Should state ever actually null?
+    string state;
+    string state_description;
+    string tenant_id;
+
+    union { null, long } @logicalType("timestamp-millis") launched_at = null;
+    union { null, long } @logicalType("timestamp-millis") terminated_at = null;
+
+    long @logicalType("timestamp-millis") created_at;
+    union { null, long } @logicalType("timestamp-millis") updated_at;
+
+    boolean deleted = false;
+    union { null, long } @logicalType("timestamp-millis") deleted_at;
+  }
+}

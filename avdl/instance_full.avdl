@@ -1,0 +1,93 @@
+/**
+ * Basic instance record IDL
+ */
+
+@namespace("org.openstack.messages")
+protocol Instances {
+
+  record SecurityGroup {
+    int id;
+    string name;
+    string project_id;
+    // UUID - fixed(16) 
+    string user_id;
+    string description="";
+
+    long @logicalType("timestamp-millis") created_at;
+    union { null, long } @logicalType("timestamp-millis") updated_at;
+
+    boolean deleted = false;
+    union { null, long } @logicalType("timestamp-millis") deleted_at;
+  }
+
+  record InstanceFull {
+    // fixed(4)?
+    union { null, string } access_ip_v4 = null;
+    // fixed(16)?
+    union { null, string } access_ip_v6 = null;
+    union { null, string } architecture = null;
+    union { null, string } availability_zone = null;
+    string display_name;
+    int ephemeral_gb;
+    union { null, string } host = null;
+    union { null, string } hostname;
+    int instance_type_id;
+    string kernel_id;
+    int memory_mb;
+    map<string> metadata = {};
+    union { null, string } node = null;
+    string os_type;
+    string ramdisk_id;
+    union { null, string } reservation_id;
+    int root_gb;
+    int vcpus;
+
+    boolean auto_disk_config = false;
+    union { null, string } cell_name = null;
+    boolean cleaned = false;
+    string config_drive;
+    union { null, string } default_ephemeral_device = null;
+    union { null, string } default_swap_device = null;
+    boolean disable_terminate = false;
+    string display_description;
+    // UUID - fixed(16) 
+    union { null, string } ephemeral_key_uuid = null;
+    int id;
+    // UUID - fixed(16) 
+    string image_ref;
+    union { null, string } key_data = null;
+    union { null, string } key_name = null;
+    int launch_index;
+    union { null, string } launched_on;
+    boolean locked = false;
+    union { null, string } locked_by;
+    string name;
+    int power_state;
+    int progress;
+    string project_id;
+    union { null, string } root_device_name = null;
+    union { null, long } @logicalType("timestamp-millis") scheduled_at = null;
+    boolean shutdown_terminate = false;
+    map <string> system_metadata = {};
+    string task_state;
+    union { null, string } user_data = null;
+    // UUID - fixed(16) 
+    string uuid;
+    union { null, string } vm_mode = null;
+    union { null, string } vm_state = null;
+
+    // UUID - fixed(16)
+    union { null, string } user_id;
+
+    array<SecurityGroup> security_groups = [];
+
+    union { null, long } @logicalType("timestamp-millis") launched_at = null;
+    union { null, long } @logicalType("timestamp-millis") terminated_at = null;
+
+    long @logicalType("timestamp-millis") created_at;
+    union { null, long } @logicalType("timestamp-millis") updated_at;
+
+    boolean deleted = false;
+    union { null, long } @logicalType("timestamp-millis") deleted_at;
+  }
+}

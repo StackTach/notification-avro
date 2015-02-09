@@ -1,0 +1,32 @@
+/**
+ * Basic image record IDL
+ */
+
+@namespace("org.openstack.messages")
+protocol Images {
+
+  record Image {
+    // If this is always UUID, perhaps a "fixed" type instead?
+    string id;
+    // int or long may be preferable
+    union {null, string} checksum = null;
+    string container_format;
+    string disk_format;
+    boolean is_public = false;
+    boolean deleted = false;
+    int min_disk;
+    int min_ram;
+    int size;
+    // Would like to change to enum if possible
+    string status;
+    string name;
+    string owner;
+
+
+    long @logicalType("timestamp-millis") created_at;
+    union {null, long} @logicalType("timestamp-millis") updated_at = null;
+    union {null, long} @logicalType("timestamp-millis") deleted_at = null;
+
+    map<string> properties;
+  }
+}
