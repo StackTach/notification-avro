@@ -51,9 +51,9 @@ function generate_schemas {
   mkdir "avsc"
 
   # Generate schemas from idl
-  java -jar "${tools_path}/${avro_tools}" idl "avdl/image.avdl" "avsc/image.avsc"
-  java -jar "${tools_path}/${avro_tools}" idl "avdl/instance_brief.avdl" "avsc/instance_brief.avsc"
-  java -jar "${tools_path}/${avro_tools}" idl "avdl/instance_full.avdl" "avsc/instance_full.avsc"
+  java -jar "${tools_path}/${avro_tools}" idl2schemata "avdl/image.avdl" "avsc"
+  java -jar "${tools_path}/${avro_tools}" idl2schemata "avdl/instance_brief.avdl" "avsc"
+  java -jar "${tools_path}/${avro_tools}" idl2schemata "avdl/instance_full.avdl" "avsc"
 }
 
 # Download the avro tools jar file if needed

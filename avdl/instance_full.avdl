@@ -5,6 +5,76 @@
 @namespace("org.openstack.messages")
 protocol Instances {
 
+  record IPAddress {
+    // union { fixed(4), fixed(16) }
+    string address;
+    map<string> meta = {};
+    string type;
+    // Enum here perhaps? Only two possibilities.
+    int version;
+  }
+
+  record IPAddressFloat {
+    // union { fixed(4), fixed(16) }
+    string address;
+    array<string> floating_ips;
+    map<string> meta = {};
+    string type;
+    // Enum here perhaps? Only two possibilities.
+    int version;
+  }
+
+  record Route {
+    string cidr;
+    IPAddress gateway;
+    union { null, string } interface = null;
+    map<string> meta;
+  }
+
+  record Subnet {
+    string cidr;
+    array<IPAddress> dns;
+    IPAddress gateway;
+    array<IPAddressFloat> ips;
+    map<string> meta;
+    array<Route> routes;
+  }
+
+  record Network {
+    string bridge;
+    // UUID - fixed(16)
+    string id;
+    string label;
+    array<Subnet> subnets;
+    map<string> meta;
+  }
+
+  record NetworkInfo {
+    // union { fixed(4), fixed(16) }?
+    string address;
+    string devname;
+    // UUID - fixed(16)
+    string id;
+    map<string> meta;
+    Network network;
+    union { null, string } ovs_interfaceid;
+    union { null, string } qbg_params;
+    union { null, string } qbh_params;
+    union { null, string } type;
+  }
+
+  record InfoCache {
+    // fixed(16)?
+    string instance_uuid;
+    array<NetworkInfo> network_info = [];
+
+    long @logicalType("timestamp-millis") created_at;
+    union { null, long } @logicalType("timestamp-millis") updated_at;
+
+    boolean deleted = false;
+    union { null, long } @logicalType("timestamp-millis") deleted_at;
+  }
+
   record SecurityGroup {
     int id;
     string name;
@@ -80,6 +150,7 @@ protocol Instances {
     union { null, string } user_id;
 
     array<SecurityGroup> security_groups = [];
+    InfoCache info_cache;
 
     union { null, long } @logicalType("timestamp-millis") launched_at = null;
     union { null, long } @logicalType("timestamp-millis") terminated_at = null;
