@@ -1,0 +1,25 @@
+@namespace("org.openstack.messages.compute.instance")
+
+protocol Messages {
+
+  import idl "objects/instance_brief.avdl";
+  import idl "objects/bandwidth.avdl";
+
+  /*
+   * Currently this message has ALL the fields as a single blob.
+   * Really don't like the idea of adding the extra fields to the
+   * instance obj JUST for this one message though.
+   */
+  @alias("org.openstack.messages.compute.instance.update")
+  record InstanceUpdate {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+    @logicalType("timestamp-millis")
+    long audit_period_beginning;
+    @logicalType("timestamp-millis")
+    long audit_period_ending;
+    org.openstack.messages.objects.Bandwidth bandwidth;
+    union { null, string } new_task_state;
+    union { null, string } old_state;
+    union { null, string } old_task_state;
+  }
+}

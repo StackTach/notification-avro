@@ -2,8 +2,8 @@
  * Basic instance record IDL
  */
 
-@namespace("org.openstack.messages")
-protocol Instances {
+@namespace("org.openstack.messages.objects")
+protocol Objects {
 
   record InstanceBrief {
     // fixed(4)?

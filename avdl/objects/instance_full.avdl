@@ -1,9 +1,9 @@
 /**
- * Basic instance record IDL
+ * Complete instance record IDL
  */
 
-@namespace("org.openstack.messages")
-protocol Instances {
+@namespace("org.openstack.messages.objects")
+protocol Objects {
 
   record IPAddress {
     // union { fixed(4), fixed(16) }
@@ -88,6 +88,39 @@ protocol Instances {
 
     boolean deleted = false;
     union { null, long } @logicalType("timestamp-millis") deleted_at;
+  }
+
+  record InstanceType {
+    int ephemeral_gb;
+    map<string> extra_specs;
+    string flavorid;
+    int id;
+    int memory_mb;
+    string name;
+    int root_gb;
+    float rxtx_factor;
+    int swap;
+    int vcpu_weight;
+    int vcpus;
+  }
+
+  record BlockDeviceMapping {
+    int boot_index;
+    boolean delete_on_termination;
+    string destination_type;
+    union { null, string } device_name;
+    string device_type;
+    union { null, string } disk_bus;
+    union { null, string } guest_format;
+    // UUID - fixed(16)
+    string image_id;
+    // UUID - fixed(16)
+    string instance_uuid;
+    union { null, string } no_device;
+    union { null, string } snapshot_id;
+    string source_type;
+    union { null, string } volume_id;
+    union { null, int } volume_size;
   }
 
   record InstanceFull {

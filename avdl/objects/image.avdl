@@ -2,8 +2,8 @@
  * Basic image record IDL
  */
 
-@namespace("org.openstack.messages")
-protocol Images {
+@namespace("org.openstack.messages.objects")
+protocol Objects {
 
   record Image {
     // If this is always UUID, perhaps a "fixed" type instead?

@@ -1,0 +1,22 @@
+/**
+ * Request specification record IDL
+ */
+
+@namespace("org.openstack.messages.objects")
+protocol Scheduler {
+  import idl "image.avdl";
+  import idl "instance_full.avdl";
+
+  record RequestSpec {
+      int num_instances;
+      BlockDeviceMapping block_device_mapping;
+      Image image;
+      InstanceType instance_type;
+      InstanceFull instance_properties;
+      // This seems a bit confusing compared to the security_groups entry
+      // in the instance
+      array<string> security_group;
+      // UUIDs - array<fixed(16)>
+      array<string> instance_uuids;
+  }
+}

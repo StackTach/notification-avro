@@ -1,0 +1,14 @@
+/**
+ * Instance exception record IDL
+ */
+
+@namespace("org.openstack.messages.objects")
+protocol Objects {
+  record InstanceException {
+    // Both get used at various times - need to pick one and stick to it!
+    union { null, string } instance_id = null;
+    union { null, string } instance_uuid = null;
+    string reason;
+    int code;
+  }
+}

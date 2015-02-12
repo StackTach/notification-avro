@@ -1,0 +1,42 @@
+@namespace("org.openstack.messages.scheduler")
+protocol Messages {
+
+  import idl "objects/request_spec.avdl";
+  import idl "objects/instance_full.avdl";
+  import idl "objects/instance_exception.avdl";
+
+  record WeightedHost {
+    // UUID - fixed(16)
+    string host;
+    float weight;
+  }
+
+  @alias("org.openstack.messages.scheduler.run_instance")
+  record RunInstance {
+    // UUID - fixed(16)
+    string instance_id;
+    org.openstack.messages.objects.InstanceFull instance_properties;
+    string method;
+    org.openstack.messages.objects.InstanceException reason;
+    org.openstack.messages.objects.RequestSpec request_spec;
+    string state;
+  }
+
+  @alias("org.openstack.messages.scheduler.run_instance.scheduled")
+  record RunInstanceScheduled {
+    // UUID - fixed(16)
+    string instance_id;
+    WeightedHost weighted_host;
+    org.openstack.messages.objects.RequestSpec request_spec;
+  }
+
+  @alias("org.openstack.messages.scheduler.run_instance.end")
+  record RunInstanceEnd {
+    org.openstack.messages.objects.RequestSpec request_spec;
+  }
+
+  @alias("org.openstack.messages.scheduler.run_instance.start")
+  record RunInstanceStart {
+    org.openstack.messages.objects.RequestSpec request_spec;
+  }
+}

@@ -1,0 +1,17 @@
+/**
+ * Bandwidth record IDL
+ */
+
+@namespace("org.openstack.messages.objects")
+protocol Objects {
+
+  record BandwidthEntry {
+    int bw_in;
+    int bw_out;
+  }
+
+  record Bandwidth {
+    BandwidthEntry public;
+    BandwidthEntry private;
+  }
+}
