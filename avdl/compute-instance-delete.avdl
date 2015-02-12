@@ -1,0 +1,12 @@
+@namespace("org.openstack.messages.compute.instance.delete")
+
+protocol Messages {
+
+  import idl "objects/instance_brief.avdl";
+
+  @alias(["org.openstack.messages.compute.instance.delete.start",
+          "org.openstack.messages.compute.instance.delete.end"])
+  record InstanceDelete {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+  }
+}

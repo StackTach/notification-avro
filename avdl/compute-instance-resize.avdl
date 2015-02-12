@@ -1,0 +1,28 @@
+@namespace("org.openstack.messages.compute.instance.resize")
+
+protocol Messages {
+
+  import idl "objects/instance_brief.avdl";
+  import idl "objects/common.avdl";
+
+  @alias(["org.openstack.messages.compute.instance.resize.confirm.start",
+          "org.openstack.messages.compute.instance.resize.prep.start"])
+  record InstanceResizeConfirmStart {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+  }
+
+  @alias(["org.openstack.messages.compute.instance.resize.confirm.end",
+          "org.openstack.messages.compute.instance.resize.start",
+          "org.openstack.messages.compute.instance.resize.end"])
+  record InstanceResize {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+    array<org.openstack.messages.objects.FixedIP> fixed_ips;
+  }
+
+  @alias("org.openstack.messages.compute.instance.resize.prep.end")
+  record InstanceResize {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+    string new_instance_type;
+    int new_instance_type_id;
+  }
+}

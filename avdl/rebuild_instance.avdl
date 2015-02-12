@@ -1,0 +1,34 @@
+@namespace("org.openstack.messages")
+
+protocol Messages {
+
+  import idl "objects/instance_full.avdl";
+  import idl "objects/common.avdl";
+  import idl "objects/instance_exception.avdl";
+
+  record RebuildArgs {
+    array<org.openstack.messages.objects.Bdm> bdms;
+    org.openstack.messages.objects.Context context;
+    // Unsure as to the array contents - guessing string for now
+    array<string> injected_files;
+    org.openstack.messages.objects.InstanceFull instance;
+    boolean on_shared_storage;
+    // UUID - fixed(16)
+    string orig_image_ref;
+    // UUID - fixed(16)
+    string image_ref;
+    map<string> orig_sys_metadata;
+    boolean preserve_ephemeral;
+    boolean recreate;
+    // Unsure as to the array contents - guessing string for now
+    array<string> reservations;
+    // What exactly is 'self' in this context?
+    union { null, string } self = null;
+  }
+
+  @alias(["org.openstack.messages.rebuild_instance"])
+  record RebuildInstance {
+    RebuildArgs args;
+    org.openstack.messages.objects.InstanceException instance_exception;
+  }
+}

@@ -1,0 +1,12 @@
+@namespace("org.openstack.messages.compute.instance.snapshot")
+
+protocol Messages {
+
+  import idl "objects/instance_brief.avdl";
+
+  @alias(["org.openstack.messages.compute.instance.snapshot.start",
+          "org.openstack.messages.compute.instance.snapshot.end"])
+  record InstanceSnapshot {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+  }
+}

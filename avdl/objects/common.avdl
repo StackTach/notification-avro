@@ -1,0 +1,88 @@
+@namespace("org.openstack.messages.objects")
+protocol Objects {
+
+  record BandwidthEntry {
+    int bw_in;
+    int bw_out;
+  }
+
+  record Bandwidth {
+    BandwidthEntry public;
+    BandwidthEntry private;
+  }
+
+  /*
+   * Awful lot of duplication among IPAddress, FixedIP, and IPAddressFloat
+   * Should decide on a single representation for these if possible
+   * Need more info on what these actually represent in context because the
+   * names seem misleading - e.g. FixedIP had an array of floating IPs?
+   */
+  record IPAddress {
+    // union { fixed(4), fixed(16) }
+    string address;
+    map<string> meta = {};
+    string type;
+    // Enum here perhaps? Only two possibilities.
+    int version;
+  }
+
+  record FixedIP {
+    // union { fixed(4), fixed(16) }
+    string address;
+    map<string> meta = {};
+    string type;
+    // Enum here perhaps? Only two possibilities.
+    int version;
+    array<string> floating_ips;
+    string label;
+  }
+
+  record IPAddressFloat {
+    // union { fixed(4), fixed(16) }
+    string address;
+    array<string> floating_ips;
+    map<string> meta = {};
+    string type;
+    // Enum here perhaps? Only two possibilities.
+    int version;
+  }
+
+  record Bdm {
+    string device_name;
+    int id;
+    boolean delete_on_termination;
+    // UUID - fixed(16)
+    string instance_uuid;
+    union { null, string } no_device = null;
+    // UUID - fixed(16)
+    union { null, string } snapshot_id = null;
+    union { null, string } virtual_name = null;
+    // UUID - fixed(16)
+    union { null, string } volume_id = null;
+    union { null, int } volume_size = null;
+
+    long @logicalType("timestamp-millis") created_at;
+    union { null, long } @logicalType("timestamp-millis") updated_at;
+    boolean deleted = false;
+    union { null, long } @logicalType("timestamp-millis") deleted_at;
+  }
+
+  record Context {
+    // Currently "y" or "n" - boolean would be better
+    string _read_deleted;
+    // UUID - fixed(16)
+    string auth_token;
+    union { null, array<string> } glance_api_servers;
+    boolean instance_lock_checked;
+    boolean is_admin;
+    string project_id;
+    string project_name;
+    union { null, string } quota_class;
+    IPAddress remote_address;
+    string request_id;
+    array<string> roles;
+    union { null, long } @logicalType("timestamp-millis") timestamp;
+    string user_id;
+    string user_name;
+  }
+}

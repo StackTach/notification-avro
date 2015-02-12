@@ -1,0 +1,21 @@
+@namespace("org.openstack.messages")
+
+protocol Messages {
+
+  import idl "objects/instance_full.avdl";
+  import idl "objects/common.avdl";
+  import idl "objects/instance_exception.avdl";
+
+  record RescueArgs {
+    org.openstack.messages.objects.Context context;
+    org.openstack.messages.objects.InstanceFull instance;
+    // What exactly is 'self' in this context?
+    union { null, string } self = null;
+  }
+
+  @alias(["org.openstack.messages.rescue_instance"])
+  record RescueInstance {
+    RescueArgs args;
+    org.openstack.messages.objects.InstanceException instance_exception;
+  }
+}

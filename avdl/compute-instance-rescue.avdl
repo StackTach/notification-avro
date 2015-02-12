@@ -1,0 +1,15 @@
+@namespace("org.openstack.messages.compute.instance.rescue")
+
+protocol Messages {
+
+  import idl "objects/instance_brief.avdl";
+  import idl "objects/common.avdl";
+
+  @alias(["org.openstack.messages.compute.instance.rescue.start",
+          "org.openstack.messages.compute.instance.rescue.end"])
+  record InstanceRescue {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+    array<org.openstack.messages.objects.FixedIP> fixed_ips;
+    string rescue_image_name;
+  }
+}

@@ -1,0 +1,20 @@
+@namespace("org.openstack.messages.compute.instance.create")
+
+protocol Messages {
+
+  import idl "objects/instance_brief.avdl";
+  import idl "objects/instance_exception.avdl";
+
+  @alias(["org.openstack.messages.compute.instance.create.start",
+          "org.openstack.messages.compute.instance.create.end"])
+  record InstanceCreate {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+  }
+
+  @alias("org.openstack.messages.compute.instance.create.error")
+  record InstanceCreateError {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+    int code;
+    org.openstack.messages.objects.InstanceException exception;
+  }
+}

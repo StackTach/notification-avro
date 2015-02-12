@@ -31,6 +31,8 @@ never_venv=0
 force=0
 wrapper=""
 tools_path="lib"
+idl_path="avdl"
+schema_path="avsc"
 avro_tools="avro-tools-1.7.7.jar"
 avro_mirror="http://www.gtlib.gatech.edu/pub/apache/avro/avro-1.7.7/java/"
 
@@ -45,18 +47,23 @@ function run_tests {
 function generate_schemas {
   download_avro
   # Clean out existing schemas
-  if [ -d "avsc" ]; then
-    rm -Rf "avsc"
+  if [ -d "${schema_path}" ]; then
+    rm -Rf "${schema_path}"
   fi
-  mkdir "avsc"
+  mkdir "${schema_path}"
 
-  # Generate schemas from idl
-  #  java -jar "${tools_path}/${avro_tools}" idl2schemata "avdl/image.avdl" "avsc"
-  #  java -jar "${tools_path}/${avro_tools}" idl2schemata "avdl/instance_brief.avdl" "avsc"
-  #  java -jar "${tools_path}/${avro_tools}" idl2schemata "avdl/instance_full.avdl" "avsc"
-  #  java -jar "${tools_path}/${avro_tools}" idl2schemata "avdl/request_spec.avdl" "avsc"
-  java -jar "${tools_path}/${avro_tools}" idl2schemata "avdl/scheduler-run_instance.avdl" "avsc"
-  java -jar "${tools_path}/${avro_tools}" idl2schemata "avdl/compute-instance-update.avdl" "avsc"
+  for file in ${idl_path}/*.avdl ; do
+    if [[ ! -d "$file" ]]; then
+      echo -n "Processing IDL: $file ... "
+      java -jar "${tools_path}/${avro_tools}" idl2schemata "${file}" "${schema_path}"; RC=$?
+      if [ "$RC" != "0" ]; then
+          echo "Fail"
+          FAILURES=$((FAILURES + 1))
+      else
+          echo "Done"
+      fi
+    fi
+  done
 }
 
 # Download the avro tools jar file if needed

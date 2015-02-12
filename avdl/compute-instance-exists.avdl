@@ -1,0 +1,18 @@
+@namespace("org.openstack.messages.compute.instance")
+
+protocol Messages {
+
+  import idl "objects/instance_brief.avdl";
+  import idl "objects/bandwidth.avdl";
+
+  @alias(["org.openstack.messages.compute.instance.exists",
+          "org.openstack.messages.compute.instance.exists.verified"])
+  record InstanceExists {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+    @logicalType("timestamp-millis")
+    long audit_period_beginning;
+    @logicalType("timestamp-millis")
+    long audit_period_ending;
+    org.openstack.messages.objects.Bandwidth bandwidth;
+  }
+}

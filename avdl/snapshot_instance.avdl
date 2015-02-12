@@ -1,0 +1,23 @@
+@namespace("org.openstack.messages")
+
+protocol Messages {
+
+  import idl "objects/instance_full.avdl";
+  import idl "objects/common.avdl";
+  import idl "objects/instance_exception.avdl";
+
+  record SnapshotArgs {
+    org.openstack.messages.objects.Context context;
+    org.openstack.messages.objects.InstanceFull instance;
+    // UUID - fixed(16)
+    union { null, string } image_id;
+    // What exactly is 'self' in this context?
+    union { null, string } self = null;
+  }
+
+  @alias(["org.openstack.messages.snapshot_instance"])
+  record SnapshotInstance {
+    SnapshotArgs args;
+    org.openstack.messages.objects.InstanceException instance_exception;
+  }
+}

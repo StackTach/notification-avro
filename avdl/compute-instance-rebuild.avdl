@@ -1,0 +1,18 @@
+@namespace("org.openstack.messages.compute.instance.rebuild")
+
+protocol Messages {
+
+  import idl "objects/instance_brief.avdl";
+  import idl "objects/common.avdl";
+
+  @alias("org.openstack.messages.compute.instance.rebuild.start")
+  record InstanceRebuildStart {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+  }
+
+  @alias("org.openstack.messages.compute.instance.rebuild.end")
+  record InstanceRebuildEnd {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+    array<org.openstack.messages.objects.FixedIP> fixed_ips;
+  }
+}

@@ -1,0 +1,12 @@
+@namespace("org.openstack.messages.compute.instance.power_off")
+
+protocol Messages {
+
+  import idl "objects/instance_brief.avdl";
+
+  @alias(["org.openstack.messages.compute.instance.power_off.start",
+          "org.openstack.messages.compute.instance.power_off.end"])
+  record InstancePowerOff {
+    org.openstack.messages.objects.InstanceBrief instance_properties;
+  }
+}

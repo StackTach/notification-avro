@@ -1,0 +1,24 @@
+@namespace("org.openstack.messages")
+
+protocol Messages {
+
+  import idl "objects/instance_full.avdl";
+  import idl "objects/common.avdl";
+  import idl "objects/instance_exception.avdl";
+
+  record TerminateArgs {
+    array<org.openstack.messages.objects.Bdm> bdms;
+    org.openstack.messages.objects.Context context;
+    org.openstack.messages.objects.InstanceFull instance;
+    // Unsure as to the array contents - guessing string for now
+    array<string> reservations;
+    // What exactly is 'self' in this context?
+    union { null, string } self = null;
+  }
+
+  @alias(["org.openstack.messages.terminate_instance"])
+  record TerminateInstance {
+    TerminateArgs args;
+    org.openstack.messages.objects.InstanceException instance_exception;
+  }
+}
